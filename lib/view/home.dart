@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simple_project/view/second_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -17,31 +18,36 @@ class _HomeState extends State<Home> {
         onPressed: () {
           int last = numbers.last;
           setState(() {
-            numbers.add(last+1);
+            numbers.add(last + 1);
           });
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
-      body: Container(
-        child: Column(
-          children: [
-            Text(
-              numbers.last.toString(),
-              style: TextStyle(fontSize: 20),
+      body: Column(
+        children: [
+          Text(
+            numbers.last.toString(),
+            style: const TextStyle(fontSize: 20),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: numbers.length,
+              itemBuilder: (context, index) {
+                return Text(
+                  numbers[index].toString(),
+                  style: const TextStyle(fontSize: 20),
+                );
+              },
             ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: numbers.length,
-                itemBuilder: (context, index) {
-                  return Text(
-                    numbers[index].toString(),
-                    style: const TextStyle(fontSize: 20),
-                  );
-                },
-              ),
-            )
-          ],
-        ),
+          ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) =>   SecondScreen(numbers:numbers,),
+                ));
+              },
+              child: const Text('NextPage'))
+        ],
       ),
     );
   }
